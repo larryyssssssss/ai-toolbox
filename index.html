@@ -5,128 +5,301 @@
   <title>AI Toolbox · 日用小工具集合</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Inter Rounded & 思源黑体字体 -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Rounded:wght@500;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --color-primary: #FF6B00;
+      --color-accent: #FF007A;
+      --color-bg-grad-3: #FFD600;
+      --color-bg-grad-4: #FFF5E0;
+      --color-bg-grad-5: #FFF8F0;
+      --color-btn: #E66000;
+      --color-btn-text: #FFF;
+      --color-card-shadow: rgba(255, 0, 122, 0.08);
+      --color-card-inner: rgba(0,0,0,0.05);
+      --color-card-glass: rgba(255,255,255,0.80);
+      --color-card-border: #FFD600;
+      --color-card-hover: #FF6B00;
+      --color-btn-hover: #FF007A;
+      --color-dot: #FFD600;
+      --color-dot-active: #FF007A;
+      --color-title: #222;
+      --color-subtitle: #888;
+      --color-card-title: #FF007A;
+      --color-card-desc: #444;
+    }
+
     body {
-      background: linear-gradient(120deg, #ffecd2 0%, #fcb69f 35%, #a1c4fd 100%);
-      font-family: 'Segoe UI', 'Helvetica Neue', Arial, 'PingFang SC', sans-serif;
+      min-height: 100vh;
       margin: 0;
       padding: 0;
-      color: #222;
-      min-height: 100vh;
+      font-family: 'Inter Rounded', '思源黑体', 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+      color: var(--color-title);
+      background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary) 50%, var(--color-bg-grad-3) 100%);
+      position: relative;
+      overflow-x: hidden;
+    }
+    /* 粒子噪点背景 */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: url('assets/noise.svg');
+      opacity: 0.05;
+      z-index: 0;
+      background-size: cover;
+      background-blend-mode: soft-light;
     }
     header {
       text-align: center;
-      padding: 48px 0 16px 0;
-      background: rgba(255,255,255,0.85);
-      border-bottom: 1px solid #e0e3e6;
+      padding: 48px 0 14px 0;
+      background: var(--color-bg-grad-4);
+      border-bottom: 1.5px solid var(--color-bg-grad-3);
       box-shadow: 0 2px 8px rgba(0,0,0,.03);
       backdrop-filter: blur(2px);
     }
     h1 {
-      font-size: 2.5rem;
-      margin-bottom: 8px;
+      font-size: 2.2rem;
+      font-family: 'Inter Rounded', '思源黑体', sans-serif;
       font-weight: 700;
+      margin-bottom: 8px;
       letter-spacing: 1px;
-      color: #222;
-      background: linear-gradient(90deg, #ff6a88, #ffb86b, #43e97b, #38f9d7, #a1c4fd);
+      background: linear-gradient(90deg, var(--color-accent), var(--color-primary), var(--color-bg-grad-3));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       text-fill-color: transparent;
     }
     .desc {
-      color: #666;
+      color: var(--color-subtitle);
       font-size: 1.1rem;
       margin-bottom: 0;
+      font-family: 'Inter Rounded', '思源黑体', sans-serif;
+    }
+    .swiper-container {
+      position: relative;
+      overflow: hidden;
+      padding: 0 24px;
+      max-width: 100vw;
+      margin: 0 auto;
     }
     .grid {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       gap: 32px;
-      justify-content: center;
-      padding: 48px 0;
+      justify-content: flex-start;
+      padding: 52px 0 24px 0;
       max-width: 1100px;
       margin: 0 auto;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      z-index: 1;
     }
     .card {
-      background: rgba(255,255,255,0.98);
-      border-radius: 20px;
-      box-shadow: 0 4px 24px 0 rgba(255, 106, 136, .08), 0 1.5px 6px rgba(161,196,253,.07);
+      background: var(--color-card-glass);
+      border-radius: 14px;
+      box-shadow: 0 4px 24px 0 var(--color-card-shadow), 0 1.5px 6px var(--color-card-inner), 0 0 0 8px rgba(255,255,255,0.03) inset;
       padding: 36px 32px 28px 32px;
       min-width: 240px;
       max-width: 320px;
       text-align: left;
-      border: 1.5px solid #ffe0e0;
-      transition: box-shadow .2s, border-color .2s, transform .2s;
+      border: 2px solid var(--color-card-border);
+      transition: box-shadow .15s, border-color .15s, transform .15s;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       position: relative;
+      backdrop-filter: blur(6px);
       overflow: hidden;
+      z-index: 1;
     }
-    .card:hover {
-      box-shadow: 0 8px 32px rgba(255,106,136,.16), 0 2px 12px rgba(161,196,253,.09);
-      border-color: #ffb86b;
-      transform: translateY(-4px) scale(1.03);
+    .card:hover, .card:focus-within {
+      box-shadow: 0 8px 32px var(--color-card-shadow), 0 2px 12px var(--color-card-inner);
+      border-color: var(--color-card-hover);
+      transform: translateY(-2px) scale(1.03);
+    }
+    .card:active {
+      transform: scale(0.96);
+      box-shadow: 0 6px 18px var(--color-card-shadow);
     }
     .card-title {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       font-weight: 600;
       margin-bottom: 10px;
       display: flex;
       align-items: center;
       gap: 8px;
-      color: #222;
+      color: var(--color-card-title);
+      font-family: 'Inter Rounded', '思源黑体', sans-serif;
     }
     .card-desc {
-      color: #444;
+      color: var(--color-card-desc);
       font-size: 1rem;
       margin-bottom: 18px;
       line-height: 1.6;
+      font-family: 'Inter Rounded', '思源黑体', sans-serif;
     }
     .card-link {
       align-self: flex-end;
-      padding: 8px 16px;
-      background: linear-gradient(90deg, #ff6a88 0%, #ffb86b 100%);
-      color: #fff;
-      border-radius: 6px;
+      min-height: 48px;
+      padding: 0 24px;
+      background: var(--color-btn);
+      color: var(--color-btn-text);
+      border-radius: 8px;
       text-decoration: none;
       font-size: 1rem;
       font-weight: 500;
-      transition: background .2s;
-      box-shadow: 0 2px 6px rgba(255,106,136,.15);
+      font-family: 'Inter Rounded', '思源黑体', sans-serif;
+      transition: background .18s, color .18s, box-shadow .18s;
+      box-shadow: 0 2px 6px var(--color-card-shadow);
       border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 6px;
+      cursor: pointer;
     }
-    .card-link:hover {
-      background: linear-gradient(90deg, #a1c4fd 0%, #ffecd2 100%);
-      color: #222;
+    .card-link:hover, .card-link:focus {
+      background: var(--color-btn-hover);
+      color: #fff;
+      box-shadow: 0 4px 16px var(--color-card-shadow);
+    }
+    .card-link:active {
+      background: var(--color-primary);
+      color: #fff;
+      transform: scale(0.96);
+    }
+    /* Swiper箭头 */
+    .swiper-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #FFD600 0%, #FF007A 100%);
+      border-radius: 50%;
+      border: none;
+      opacity: 0.7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 2;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: opacity .16s;
+    }
+    .swiper-arrow:hover {
+      opacity: 1;
+    }
+    .swiper-arrow.left { left: 4px;}
+    .swiper-arrow.right { right: 4px;}
+    .swiper-arrow svg { width: 20px; height: 20px; fill: #fff;}
+    /* 分页圆点 */
+    .swiper-dots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      margin: 10px 0 32px 0;
+      z-index: 1;
+    }
+    .swiper-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--color-dot);
+      opacity: 0.5;
+      transition: transform .18s, background .18s;
+    }
+    .swiper-dot.active {
+      background: var(--color-dot-active);
+      opacity: 1;
+      transform: scale(1.4);
     }
     @media (max-width: 900px) {
       .grid { gap: 18px; padding: 32px 0; }
       .card { min-width: 180px; max-width: 90vw; padding: 24px 12px; }
-      h1 { font-size: 1.6rem; }
+      h1 { font-size: 1.3rem; }
+      .swiper-arrow { width: 32px; height: 32px;}
     }
   </style>
 </head>
 <body>
   <header>
     <h1>AI Toolbox · 日用小工具集合</h1>
-    <div class="desc">常用小工具，随时访问。</div>
+    <div class="desc">一键切换 mm·pt·px，设计师的贴心小助手 🧮</div>
   </header>
-  <div class="grid">
-    <div class="card">
-      <div class="card-title">🖨️ 打印字号换算</div>
-      <div class="card-desc">打印/设计常用单位转换，支持 Point、mm、px 等。</div>
-      <a class="card-link" href="打印字号 (Point) 换算工具.html" target="_blank">打开工具</a>
+  <div class="swiper-container">
+    <button class="swiper-arrow left" aria-label="左移">
+      <svg viewBox="0 0 24 24"><path d="M15.5 19l-7-7 7-7"/></svg>
+    </button>
+    <div class="grid" id="toolGrid" tabindex="0" aria-label="工具列表">
+      <div class="card" tabindex="0">
+        <div class="card-title">🖨️ 打印字号换算</div>
+        <div class="card-desc">打印/设计常用单位转换，支持 Point、mm、px 等。</div>
+        <a class="card-link" href="打印字号 (Point) 换算工具.html" target="_blank">打开工具</a>
+      </div>
+      <!-- 继续添加你的工具卡片 -->
+      <!--
+      <div class="card" tabindex="0">
+        <div class="card-title">🔧 另一个工具</div>
+        <div class="card-desc">工具简介。</div>
+        <a class="card-link" href="another-tool.html" target="_blank">打开工具</a>
+      </div>
+      -->
     </div>
-    <!-- 继续添加你的工具卡片 -->
-    <!--
-    <div class="card">
-      <div class="card-title">🔧 另一个工具</div>
-      <div class="card-desc">工具简介。</div>
-      <a class="card-link" href="another-tool.html" target="_blank">打开工具</a>
-    </div>
-    -->
+    <button class="swiper-arrow right" aria-label="右移">
+      <svg viewBox="0 0 24 24"><path d="M8.5 5l7 7-7 7"/></svg>
+    </button>
+    <div class="swiper-dots" id="swiperDots"></div>
   </div>
+  <script>
+    // Swiper 横向滚动交互与分页圆点
+    const grid = document.getElementById('toolGrid');
+    const cards = grid.querySelectorAll('.card');
+    const dots = document.getElementById('swiperDots');
+    const leftBtn = document.querySelector('.swiper-arrow.left');
+    const rightBtn = document.querySelector('.swiper-arrow.right');
+    const cardWidth = 340; // 320+gap
+    let currentIndex = 0;
+    function updateDots() {
+      dots.innerHTML = '';
+      cards.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'swiper-dot' + (i === currentIndex ? ' active' : '');
+        dots.appendChild(dot);
+        dot.onclick = () => scrollToCard(i);
+      });
+    }
+    function scrollToCard(idx) {
+      currentIndex = idx;
+      grid.scrollTo({ left: idx * cardWidth, behavior: 'smooth' });
+      updateDots();
+    }
+    leftBtn.onclick = () => {
+      currentIndex = Math.max(0, currentIndex - 1);
+      scrollToCard(currentIndex);
+    };
+    rightBtn.onclick = () => {
+      currentIndex = Math.min(cards.length - 1, currentIndex + 1);
+      scrollToCard(currentIndex);
+    };
+    grid.addEventListener('wheel', e => {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        e.preventDefault();
+        grid.scrollLeft += e.deltaX;
+      }
+    }, {passive: false});
+    // 初始圆点
+    updateDots();
+    // 键盘可访问性
+    grid.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') rightBtn.click();
+      if (e.key === 'ArrowLeft') leftBtn.click();
+    });
+  </script>
 </body>
 </html>
