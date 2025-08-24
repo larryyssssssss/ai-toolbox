@@ -1,46 +1,132 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generated Content</title>
-  <style>
-    body { 
-      font-family: Menlo, Monaco, 'Courier New', monospace;
-      line-height: 1.6; 
-      padding: 2em; 
-      margin: 0;
-      background-color: #f8f8f8;
-    }
-    pre {
-      white-space: pre-wrap; /* 会自动换行 */
-      word-wrap: break-word;
-    }
-  </style>
-</head>
-<body>
-  <pre><!DOCTYPE html>
-<html lang="zh-CN">
-<head>
   <meta charset="UTF-8" />
-  <title>AI Toolbox · 我的日用小工具</title>
+  <title>AI Toolbox · 日用小工具集合</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body{font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Arial,sans-serif;padding:40px;background:#f7f8fa;}
-    h1{margin-bottom:24px;color:#333;text-align:center;}
-    .grid{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;}
-    .card{background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.05);padding:20px 28px;min-width:180px;text-align:center;transition:.2s;}
-    .card:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,.08);}
-    a{color:#0a84ff;text-decoration:none;font-size:16px;font-weight:600;}
+    body {
+      background: linear-gradient(120deg, #ffecd2 0%, #fcb69f 35%, #a1c4fd 100%);
+      font-family: 'Segoe UI', 'Helvetica Neue', Arial, 'PingFang SC', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #222;
+      min-height: 100vh;
+    }
+    header {
+      text-align: center;
+      padding: 48px 0 16px 0;
+      background: rgba(255,255,255,0.85);
+      border-bottom: 1px solid #e0e3e6;
+      box-shadow: 0 2px 8px rgba(0,0,0,.03);
+      backdrop-filter: blur(2px);
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 8px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #222;
+      background: linear-gradient(90deg, #ff6a88, #ffb86b, #43e97b, #38f9d7, #a1c4fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+    .desc {
+      color: #666;
+      font-size: 1.1rem;
+      margin-bottom: 0;
+    }
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      justify-content: center;
+      padding: 48px 0;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .card {
+      background: rgba(255,255,255,0.98);
+      border-radius: 20px;
+      box-shadow: 0 4px 24px 0 rgba(255, 106, 136, .08), 0 1.5px 6px rgba(161,196,253,.07);
+      padding: 36px 32px 28px 32px;
+      min-width: 240px;
+      max-width: 320px;
+      text-align: left;
+      border: 1.5px solid #ffe0e0;
+      transition: box-shadow .2s, border-color .2s, transform .2s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover {
+      box-shadow: 0 8px 32px rgba(255,106,136,.16), 0 2px 12px rgba(161,196,253,.09);
+      border-color: #ffb86b;
+      transform: translateY(-4px) scale(1.03);
+    }
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #222;
+    }
+    .card-desc {
+      color: #444;
+      font-size: 1rem;
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+    .card-link {
+      align-self: flex-end;
+      padding: 8px 16px;
+      background: linear-gradient(90deg, #ff6a88 0%, #ffb86b 100%);
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: background .2s;
+      box-shadow: 0 2px 6px rgba(255,106,136,.15);
+      border: none;
+    }
+    .card-link:hover {
+      background: linear-gradient(90deg, #a1c4fd 0%, #ffecd2 100%);
+      color: #222;
+    }
+    @media (max-width: 900px) {
+      .grid { gap: 18px; padding: 32px 0; }
+      .card { min-width: 180px; max-width: 90vw; padding: 24px 12px; }
+      h1 { font-size: 1.6rem; }
+    }
   </style>
 </head>
 <body>
-  <h1>📦 AI Toolbox</h1>
+  <header>
+    <h1>AI Toolbox · 日用小工具集合</h1>
+    <div class="desc">常用小工具，随时访问。</div>
+  </header>
   <div class="grid">
-    <div class="card"><a href="打印字号 (Point) 换算工具.html">🛠 打印字号换算</a></div>
-    <!-- 在此继续添加 -->
-    <!-- <div class="card"><a href="another-tool.html">🔧 另一个工具</a></div> -->
+    <div class="card">
+      <div class="card-title">🖨️ 打印字号换算</div>
+      <div class="card-desc">打印/设计常用单位转换，支持 Point、mm、px 等。</div>
+      <a class="card-link" href="打印字号 (Point) 换算工具.html" target="_blank">打开工具</a>
+    </div>
+    <!-- 继续添加你的工具卡片 -->
+    <!--
+    <div class="card">
+      <div class="card-title">🔧 另一个工具</div>
+      <div class="card-desc">工具简介。</div>
+      <a class="card-link" href="another-tool.html" target="_blank">打开工具</a>
+    </div>
+    -->
   </div>
-</body>
-</html></pre>
 </body>
 </html>
