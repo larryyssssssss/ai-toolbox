@@ -5,301 +5,239 @@
   <title>AI Toolbox · 日用小工具集合</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Inter Rounded & 思源黑体字体 -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Inter Rounded & 思源黑体 -->
   <link href="https://fonts.googleapis.com/css2?family=Inter+Rounded:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --color-primary: #FF6B00;
-      --color-accent: #FF007A;
-      --color-bg-grad-3: #FFD600;
-      --color-bg-grad-4: #FFF5E0;
-      --color-bg-grad-5: #FFF8F0;
-      --color-btn: #E66000;
-      --color-btn-text: #FFF;
-      --color-card-shadow: rgba(255, 0, 122, 0.08);
-      --color-card-inner: rgba(0,0,0,0.05);
-      --color-card-glass: rgba(255,255,255,0.80);
-      --color-card-border: #FFD600;
-      --color-card-hover: #FF6B00;
-      --color-btn-hover: #FF007A;
-      --color-dot: #FFD600;
-      --color-dot-active: #FF007A;
-      --color-title: #222;
-      --color-subtitle: #888;
-      --color-card-title: #FF007A;
-      --color-card-desc: #444;
+    /* =========  马卡龙色板  ========= */
+    :root{
+      --primary:#FF644C;          /* CTA / 高亮 – 珊瑚橙 */
+      --accent:#95D2BA;           /* Hover / 强调 – 馥郁薄荷绿 */
+      --highlight:#FED981;        /* 辅助 – 柔和奶油黄 */
+      --neutral-bg:#FFF9F3;       /* 页面底色 – 奶油白 */
+      --neutral-card:#FFFFFF;     
+      --neutral-border:#E8E8E8;   
+      --text-main:#222;
+      --text-sub:#666;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:'Inter Rounded','思源黑体',sans-serif;
+      background:var(--neutral-bg);
+      color:var(--text-main);
+      -webkit-font-smoothing:antialiased;
     }
 
-    body {
-      min-height: 100vh;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter Rounded', '思源黑体', 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
-      color: var(--color-title);
-      background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary) 50%, var(--color-bg-grad-3) 100%);
-      position: relative;
-      overflow-x: hidden;
+    /* ---------- 头部 ---------- */
+    header{
+      background:var(--neutral-card);
+      border-bottom:1px solid var(--neutral-border);
+      box-shadow:0 2px 6px rgba(0,0,0,.04);
+      text-align:center;
+      padding:42px 0 16px;
+      position:sticky;
+      top:0;
+      z-index:10;
     }
-    /* 粒子噪点背景 */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background: url('assets/noise.svg');
-      opacity: 0.05;
-      z-index: 0;
-      background-size: cover;
-      background-blend-mode: soft-light;
+    h1{
+      margin:0 0 8px;
+      font-size:2.2rem;
+      font-weight:700;
+      color:var(--primary);
+      letter-spacing:.5px;
     }
-    header {
-      text-align: center;
-      padding: 48px 0 14px 0;
-      background: var(--color-bg-grad-4);
-      border-bottom: 1.5px solid var(--color-bg-grad-3);
-      box-shadow: 0 2px 8px rgba(0,0,0,.03);
-      backdrop-filter: blur(2px);
+    .desc{
+      margin:0;
+      font-size:1.125rem;
+      color:var(--text-sub);
     }
-    h1 {
-      font-size: 2.2rem;
-      font-family: 'Inter Rounded', '思源黑体', sans-serif;
-      font-weight: 700;
-      margin-bottom: 8px;
-      letter-spacing: 1px;
-      background: linear-gradient(90deg, var(--color-accent), var(--color-primary), var(--color-bg-grad-3));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-fill-color: transparent;
+
+    /* ---------- 工具区域 ---------- */
+    .tools-wrapper{
+      position:relative;
+      max-width:1100px;
+      margin:0 auto;
+      padding:48px 0 40px;
     }
-    .desc {
-      color: var(--color-subtitle);
-      font-size: 1.1rem;
-      margin-bottom: 0;
-      font-family: 'Inter Rounded', '思源黑体', sans-serif;
+    .grid{
+      display:flex;
+      gap:28px;
+      overflow-x:auto;
+      scroll-behavior:smooth;
+      padding-left:24px;
     }
-    .swiper-container {
-      position: relative;
-      overflow: hidden;
-      padding: 0 24px;
-      max-width: 100vw;
-      margin: 0 auto;
+    @media(min-width:600px){
+      .grid::after{content:"";flex:0 0 120px;}
     }
-    .grid {
-      display: flex;
-      flex-wrap: nowrap;
-      gap: 32px;
-      justify-content: flex-start;
-      padding: 52px 0 24px 0;
-      max-width: 1100px;
-      margin: 0 auto;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      z-index: 1;
+
+    /* ---------- 卡片 ---------- */
+    .card{
+      flex:0 0 260px;
+      background:var(--neutral-card);
+      border:2px solid var(--highlight);
+      border-radius:16px;
+      padding:28px 24px 24px;
+      box-shadow:0 2px 10px rgba(0,0,0,.05);
+      display:flex;
+      flex-direction:column;
+      transition:border-color .15s,box-shadow .15s;
     }
-    .card {
-      background: var(--color-card-glass);
-      border-radius: 14px;
-      box-shadow: 0 4px 24px 0 var(--color-card-shadow), 0 1.5px 6px var(--color-card-inner), 0 0 0 8px rgba(255,255,255,0.03) inset;
-      padding: 36px 32px 28px 32px;
-      min-width: 240px;
-      max-width: 320px;
-      text-align: left;
-      border: 2px solid var(--color-card-border);
-      transition: box-shadow .15s, border-color .15s, transform .15s;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-      backdrop-filter: blur(6px);
-      overflow: hidden;
-      z-index: 1;
+    .card:hover{
+      border-color:var(--primary);
+      box-shadow:0 6px 18px rgba(0,0,0,.08);
     }
-    .card:hover, .card:focus-within {
-      box-shadow: 0 8px 32px var(--color-card-shadow), 0 2px 12px var(--color-card-inner);
-      border-color: var(--color-card-hover);
-      transform: translateY(-2px) scale(1.03);
+    .card:active{transform:scale(.97);}
+    .card-title{
+      font-size:1.25rem;
+      font-weight:600;
+      margin:0 0 10px;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      color:var(--primary);
     }
-    .card:active {
-      transform: scale(0.96);
-      box-shadow: 0 6px 18px var(--color-card-shadow);
+    .card-desc{
+      flex:1;
+      font-size:1rem;
+      line-height:1.55;
+      color:var(--text-sub);
+      margin:0 0 20px;
     }
-    .card-title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--color-card-title);
-      font-family: 'Inter Rounded', '思源黑体', sans-serif;
+    .card-link{
+      align-self:flex-start;
+      min-height:48px;
+      padding:0 24px;
+      background:var(--primary);
+      color:#fff;
+      border-radius:8px;
+      text-decoration:none;
+      font-size:1rem;
+      font-weight:500;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:background .15s;
     }
-    .card-desc {
-      color: var(--color-card-desc);
-      font-size: 1rem;
-      margin-bottom: 18px;
-      line-height: 1.6;
-      font-family: 'Inter Rounded', '思源黑体', sans-serif;
+    .card-link:hover,
+    .card-link:focus{
+      background:var(--accent);
     }
-    .card-link {
-      align-self: flex-end;
-      min-height: 48px;
-      padding: 0 24px;
-      background: var(--color-btn);
-      color: var(--color-btn-text);
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 1rem;
-      font-weight: 500;
-      font-family: 'Inter Rounded', '思源黑体', sans-serif;
-      transition: background .18s, color .18s, box-shadow .18s;
-      box-shadow: 0 2px 6px var(--color-card-shadow);
-      border: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 6px;
-      cursor: pointer;
+
+    /* ---------- 箭头 ---------- */
+    .arrow{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      width:40px;height:40px;
+      background:var(--neutral-card);
+      border:1px solid var(--neutral-border);
+      border-radius:50%;
+      box-shadow:0 2px 6px rgba(0,0,0,.1);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      transition:background .15s;
     }
-    .card-link:hover, .card-link:focus {
-      background: var(--color-btn-hover);
-      color: #fff;
-      box-shadow: 0 4px 16px var(--color-card-shadow);
+    .arrow svg{fill:var(--primary)}
+    .arrow:hover{background:#fff}
+    .arrow.left{left:8px}
+    .arrow.right{right:8px}
+
+    /* ---------- 分页圆点 ---------- */
+    .dots{
+      margin-top:18px;
+      display:flex;
+      justify-content:center;
+      gap:10px;
     }
-    .card-link:active {
-      background: var(--color-primary);
-      color: #fff;
-      transform: scale(0.96);
+    .dot{
+      width:12px;height:12px;
+      border-radius:50%;
+      background:var(--neutral-border);
+      transition:background .15s,transform .15s;
     }
-    /* Swiper箭头 */
-    .swiper-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
-      background: linear-gradient(135deg, #FFD600 0%, #FF007A 100%);
-      border-radius: 50%;
-      border: none;
-      opacity: 0.7;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 2;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      transition: opacity .16s;
+    .dot.active{
+      background:var(--accent);
+      transform:scale(1.4);
     }
-    .swiper-arrow:hover {
-      opacity: 1;
-    }
-    .swiper-arrow.left { left: 4px;}
-    .swiper-arrow.right { right: 4px;}
-    .swiper-arrow svg { width: 20px; height: 20px; fill: #fff;}
-    /* 分页圆点 */
-    .swiper-dots {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 14px;
-      margin: 10px 0 32px 0;
-      z-index: 1;
-    }
-    .swiper-dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: var(--color-dot);
-      opacity: 0.5;
-      transition: transform .18s, background .18s;
-    }
-    .swiper-dot.active {
-      background: var(--color-dot-active);
-      opacity: 1;
-      transform: scale(1.4);
-    }
-    @media (max-width: 900px) {
-      .grid { gap: 18px; padding: 32px 0; }
-      .card { min-width: 180px; max-width: 90vw; padding: 24px 12px; }
-      h1 { font-size: 1.3rem; }
-      .swiper-arrow { width: 32px; height: 32px;}
+
+    /* 手机端适配 */
+    @media(max-width:600px){
+      h1{font-size:1.5rem}
+      .desc{font-size:.95rem}
+      .tools-wrapper{padding:32px 0}
+      .card{flex:0 0 220px}
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>AI Toolbox · 日用小工具集合</h1>
-    <div class="desc">一键切换 mm·pt·px，设计师的贴心小助手 🧮</div>
+    <h1>AI&nbsp;Toolbox · 日用小工具集合</h1>
+    <p class="desc">精准单位换算，打印设计一步到位 🧮</p>
   </header>
-  <div class="swiper-container">
-    <button class="swiper-arrow left" aria-label="左移">
-      <svg viewBox="0 0 24 24"><path d="M15.5 19l-7-7 7-7"/></svg>
-    </button>
-    <div class="grid" id="toolGrid" tabindex="0" aria-label="工具列表">
-      <div class="card" tabindex="0">
-        <div class="card-title">🖨️ 打印字号换算</div>
-        <div class="card-desc">打印/设计常用单位转换，支持 Point、mm、px 等。</div>
-        <a class="card-link" href="打印字号 (Point) 换算工具.html" target="_blank">打开工具</a>
-      </div>
-      <!-- 继续添加你的工具卡片 -->
+
+  <section class="tools-wrapper">
+    <div class="arrow left" aria-label="向左" role="button">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M15.5 19l-7-7 7-7"/></svg>
+    </div>
+
+    <div class="grid" id="toolGrid">
+      <article class="card">
+        <h2 class="card-title">🖨 打印字号换算</h2>
+        <p class="card-desc">打印/设计常用单位转换，支持 Point、mm、px 等。</p>
+        <a class="card-link" href="打印字号 (Point) 换算工具.html" target="_blank" rel="noopener">立即换算</a>
+      </article>
+
+      <!-- 在此继续添加工具卡片 -->
       <!--
-      <div class="card" tabindex="0">
-        <div class="card-title">🔧 另一个工具</div>
-        <div class="card-desc">工具简介。</div>
-        <a class="card-link" href="another-tool.html" target="_blank">打开工具</a>
-      </div>
+      <article class="card">
+        <h2 class="card-title">🔧 另一个工具</h2>
+        <p class="card-desc">工具简介。</p>
+        <a class="card-link" href="another-tool.html" target="_blank" rel="noopener">开始使用</a>
+      </article>
       -->
     </div>
-    <button class="swiper-arrow right" aria-label="右移">
-      <svg viewBox="0 0 24 24"><path d="M8.5 5l7 7-7 7"/></svg>
-    </button>
-    <div class="swiper-dots" id="swiperDots"></div>
-  </div>
+
+    <div class="arrow right" aria-label="向右" role="button">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M8.5 5l7 7-7 7"/></svg>
+    </div>
+
+    <div class="dots" id="dots"></div>
+  </section>
+
   <script>
-    // Swiper 横向滚动交互与分页圆点
+    /* 轮播逻辑 + 圆点同步 */
     const grid = document.getElementById('toolGrid');
-    const cards = grid.querySelectorAll('.card');
-    const dots = document.getElementById('swiperDots');
-    const leftBtn = document.querySelector('.swiper-arrow.left');
-    const rightBtn = document.querySelector('.swiper-arrow.right');
-    const cardWidth = 340; // 320+gap
-    let currentIndex = 0;
-    function updateDots() {
-      dots.innerHTML = '';
-      cards.forEach((_, i) => {
-        const dot = document.createElement('div');
-        dot.className = 'swiper-dot' + (i === currentIndex ? ' active' : '');
-        dots.appendChild(dot);
-        dot.onclick = () => scrollToCard(i);
+    const cards = [...grid.children];
+    const dotsBox = document.getElementById('dots');
+    const left = document.querySelector('.arrow.left');
+    const right = document.querySelector('.arrow.right');
+    const gap = 28;
+    const cardWidth = cards[0].getBoundingClientRect().width + gap;
+    let idx = 0;
+
+    function renderDots(){
+      dotsBox.innerHTML='';
+      cards.forEach((_,i)=>{
+        const dot=document.createElement('div');
+        dot.className='dot'+(i===idx?' active':'');
+        dot.onclick=()=>scrollToIdx(i);
+        dotsBox.appendChild(dot);
       });
     }
-    function scrollToCard(idx) {
-      currentIndex = idx;
-      grid.scrollTo({ left: idx * cardWidth, behavior: 'smooth' });
-      updateDots();
+    function scrollToIdx(i){
+      idx=i;
+      grid.scrollTo({left:i*cardWidth,behavior:'smooth'});
+      renderDots();
     }
-    leftBtn.onclick = () => {
-      currentIndex = Math.max(0, currentIndex - 1);
-      scrollToCard(currentIndex);
-    };
-    rightBtn.onclick = () => {
-      currentIndex = Math.min(cards.length - 1, currentIndex + 1);
-      scrollToCard(currentIndex);
-    };
-    grid.addEventListener('wheel', e => {
-      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
-        e.preventDefault();
-        grid.scrollLeft += e.deltaX;
-      }
-    }, {passive: false});
-    // 初始圆点
-    updateDots();
-    // 键盘可访问性
-    grid.addEventListener('keydown', e => {
-      if (e.key === 'ArrowRight') rightBtn.click();
-      if (e.key === 'ArrowLeft') leftBtn.click();
+    left.onclick=()=>scrollToIdx(Math.max(0,idx-1));
+    right.onclick=()=>scrollToIdx(Math.min(cards.length-1,idx+1));
+    grid.addEventListener('scroll',()=>{
+      idx=Math.round(grid.scrollLeft/cardWidth);
+      renderDots();
     });
+    renderDots();
   </script>
 </body>
 </html>
