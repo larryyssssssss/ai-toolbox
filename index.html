@@ -1,25 +1,54 @@
+<!-- filename: index.html -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <title>AI Toolbox · 日用小工具集合</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Inter Rounded & 思源黑体 -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Rounded:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Rounded:wght@500;700&display=swap" rel="stylesheet" />
+
   <style>
-    /* =========  马卡龙色板  ========= */
+    /* ========== 1. 主题变量 ========== */
     :root{
-      --primary:#FF644C;          /* CTA / 高亮 – 珊瑚橙 */
-      --accent:#95D2BA;           /* Hover / 强调 – 馥郁薄荷绿 */
-      --highlight:#FED981;        /* 辅助 – 柔和奶油黄 */
-      --neutral-bg:#FFF9F3;       /* 页面底色 – 奶油白 */
-      --neutral-card:#FFFFFF;     
-      --neutral-border:#E8E8E8;   
+      /* 默认「珊瑚橙」主题 */
+      --primary:#FF644C;          /* CTA / 高亮 */
+      --accent:#95D2BA;           /* Hover / 强调 */
+      --highlight:#FED981;        /* 辅助 */
+      --neutral-bg:#FFF9F3;       /* 页面底色 */
+      --neutral-card:#FFFFFF;
+      --neutral-border:#E8E8E8;
       --text-main:#222;
       --text-sub:#666;
     }
-    *{box-sizing:border-box}
+    /* Bubblegum 🍬 */
+    :root[data-theme="bubblegum"]{
+      --primary:#FF6EC7;
+      --accent:#FFA4E0;
+      --highlight:#FFE7F8;
+      --neutral-bg:#FFF6FB;
+      --neutral-border:#F5D0EF;
+    }
+    /* Sky ☁ */
+    :root[data-theme="sky"]{
+      --primary:#59A5FF;
+      --accent:#8ED1FC;
+      --highlight:#C1E8FF;
+      --neutral-bg:#F4FAFF;
+      --neutral-border:#D4E8FE;
+    }
+    /* Lavender 💜 */
+    :root[data-theme="lavender"]{
+      --primary:#A280FF;
+      --accent:#C1A3FF;
+      --highlight:#E8DBFF;
+      --neutral-bg:#FAF7FF;
+      --neutral-border:#E3DAFF;
+    }
+
+    /* ========== 2. 通用样式 ========== */
+    *{box-sizing:border-box;}
     body{
       margin:0;
       font-family:'Inter Rounded','思源黑体',sans-serif;
@@ -28,7 +57,7 @@
       -webkit-font-smoothing:antialiased;
     }
 
-    /* ---------- 头部 ---------- */
+    /* -------- 头部 -------- */
     header{
       background:var(--neutral-card);
       border-bottom:1px solid var(--neutral-border);
@@ -37,7 +66,7 @@
       padding:42px 0 16px;
       position:sticky;
       top:0;
-      z-index:10;
+      z-index:20;
     }
     h1{
       margin:0 0 8px;
@@ -52,7 +81,26 @@
       color:var(--text-sub);
     }
 
-    /* ---------- 工具区域 ---------- */
+    /* -------- 主题切换器 -------- */
+    .theme-switcher{
+      position:absolute;
+      top:16px;
+      right:16px;
+      display:flex;
+      gap:10px;
+    }
+    .theme-dot{
+      width:20px;height:20px;
+      border-radius:50%;
+      border:2px solid #fff;
+      cursor:pointer;
+      box-shadow:0 0 0 2px var(--neutral-border);
+      transition:transform .15s;
+    }
+    .theme-dot:hover{transform:scale(1.2);}
+    .theme-dot.active{box-shadow:0 0 0 2px var(--primary);}
+
+    /* -------- 工具区域 -------- */
     .tools-wrapper{
       position:relative;
       max-width:1100px;
@@ -70,7 +118,7 @@
       .grid::after{content:"";flex:0 0 120px;}
     }
 
-    /* ---------- 卡片 ---------- */
+    /* -------- 卡片 -------- */
     .card{
       flex:0 0 260px;
       background:var(--neutral-card);
@@ -123,7 +171,7 @@
       background:var(--accent);
     }
 
-    /* ---------- 箭头 ---------- */
+    /* -------- 箭头 -------- */
     .arrow{
       position:absolute;
       top:50%;
@@ -139,12 +187,12 @@
       cursor:pointer;
       transition:background .15s;
     }
-    .arrow svg{fill:var(--primary)}
-    .arrow:hover{background:#fff}
-    .arrow.left{left:8px}
-    .arrow.right{right:8px}
+    .arrow svg{fill:var(--primary);}
+    .arrow:hover{background:#fff;}
+    .arrow.left{left:8px;}
+    .arrow.right{right:8px;}
 
-    /* ---------- 分页圆点 ---------- */
+    /* -------- 分页圆点 -------- */
     .dots{
       margin-top:18px;
       display:flex;
@@ -162,19 +210,27 @@
       transform:scale(1.4);
     }
 
-    /* 手机端适配 */
+    /* 手机端 */
     @media(max-width:600px){
-      h1{font-size:1.5rem}
-      .desc{font-size:.95rem}
-      .tools-wrapper{padding:32px 0}
-      .card{flex:0 0 220px}
+      h1{font-size:1.5rem;}
+      .desc{font-size:.95rem;}
+      .tools-wrapper{padding:32px 0;}
+      .card{flex:0 0 220px;}
     }
   </style>
 </head>
 <body>
   <header>
     <h1>AI&nbsp;Toolbox · 日用小工具集合</h1>
-    <p class="desc">精准单位换算，打印设计一步到位 🧮</p>
+    <p class="desc">叮叮当 叮叮当 我是卖报的小行家 🧮</p>
+
+    <!-- 主题切换器 -->
+    <div class="theme-switcher" id="themeSwitcher" aria-label="主题切换">
+      <div class="theme-dot" data-theme="default" style="background:#FF644C"></div>
+      <div class="theme-dot" data-theme="bubblegum" style="background:#FF6EC7"></div>
+      <div class="theme-dot" data-theme="sky" style="background:#59A5FF"></div>
+      <div class="theme-dot" data-theme="lavender" style="background:#A280FF"></div>
+    </div>
   </header>
 
   <section class="tools-wrapper">
@@ -184,19 +240,12 @@
 
     <div class="grid" id="toolGrid">
       <article class="card">
-        <h2 class="card-title">🖨 打印字号换算</h2>
+        <h2 class="card-title">🖨️ 打印字号换算</h2>
         <p class="card-desc">打印/设计常用单位转换，支持 Point、mm、px 等。</p>
         <a class="card-link" href="打印字号 (Point) 换算工具.html" target="_blank" rel="noopener">立即换算</a>
       </article>
 
-      <!-- 在此继续添加工具卡片 -->
-      <!--
-      <article class="card">
-        <h2 class="card-title">🔧 另一个工具</h2>
-        <p class="card-desc">工具简介。</p>
-        <a class="card-link" href="another-tool.html" target="_blank" rel="noopener">开始使用</a>
-      </article>
-      -->
+      <!-- 可继续添加更多工具卡片 -->
     </div>
 
     <div class="arrow right" aria-label="向右" role="button">
@@ -207,7 +256,11 @@
   </section>
 
   <script>
-    /* 轮播逻辑 + 圆点同步 */
+    /**
+     * @typedef {"default"|"bubblegum"|"sky"|"lavender"} ThemeName
+     */
+
+    /** ---------- 轮播逻辑 & 圆点同步 ---------- */
     const grid = document.getElementById('toolGrid');
     const cards = [...grid.children];
     const dotsBox = document.getElementById('dots');
@@ -217,27 +270,59 @@
     const cardWidth = cards[0].getBoundingClientRect().width + gap;
     let idx = 0;
 
+    /** 重新渲染滚动分页圆点 */
     function renderDots(){
-      dotsBox.innerHTML='';
-      cards.forEach((_,i)=>{
-        const dot=document.createElement('div');
-        dot.className='dot'+(i===idx?' active':'');
-        dot.onclick=()=>scrollToIdx(i);
+      dotsBox.innerHTML = '';
+      cards.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (i === idx ? ' active' : '');
+        dot.onclick = () => scrollToIdx(i);
         dotsBox.appendChild(dot);
       });
     }
+
+    /** 滚动到指定 index */
     function scrollToIdx(i){
-      idx=i;
-      grid.scrollTo({left:i*cardWidth,behavior:'smooth'});
+      idx = i;
+      grid.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
       renderDots();
     }
-    left.onclick=()=>scrollToIdx(Math.max(0,idx-1));
-    right.onclick=()=>scrollToIdx(Math.min(cards.length-1,idx+1));
-    grid.addEventListener('scroll',()=>{
-      idx=Math.round(grid.scrollLeft/cardWidth);
+
+    /* 监听左右箭头 */
+    left.onclick  = () => scrollToIdx(Math.max(0, idx - 1));
+    right.onclick = () => scrollToIdx(Math.min(cards.length - 1, idx + 1));
+    grid.addEventListener('scroll', () => {
+      idx = Math.round(grid.scrollLeft / cardWidth);
       renderDots();
     });
     renderDots();
+
+    /** ---------- 主题切换器逻辑 ---------- */
+    const themeDots = document.querySelectorAll('.theme-dot');
+    const rootEl = document.documentElement;
+
+    /**
+     * 设置主题并写入 localStorage
+     * @param {ThemeName} theme
+     */
+    function setTheme(theme='default'){
+      if(theme === 'default'){
+        rootEl.removeAttribute('data-theme');
+      }else{
+        rootEl.dataset.theme = theme;
+      }
+      localStorage.setItem('ai-toolbox-theme', theme);
+      themeDots.forEach(dot => dot.classList.toggle('active', dot.dataset.theme === theme));
+    }
+
+    // 初始主题：localStorage 优先
+    const savedTheme = /** @type {ThemeName} */ (localStorage.getItem('ai-toolbox-theme')) || 'default';
+    setTheme(savedTheme);
+
+    // 监听点击
+    themeDots.forEach(dot => {
+      dot.addEventListener('click', () => setTheme(dot.dataset.theme));
+    });
   </script>
 </body>
 </html>
