@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootstrap Test</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container py-4">
+    <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打印字号 (Point) 换算工具 (最终优化版)</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif; }
+        .container { max-width: 800px; background-color: #fff; padding: 25px 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: 2rem; margin-bottom: 2rem; }
+        h1 { color: #0056b3; }
+        .form-group { margin-bottom: 1.25rem; }
+        label { font-weight: bold; color: #555; margin-bottom: .5rem; display: block; }
+        .form-text { font-size: 0.875rem; color: #6c757d; }
+        #results { margin-top: 30px; padding: 20px; background-color: #e9f7ff; border-left: 5px solid #007bff; border-radius: 5px; display: none; transition: all 0.3s ease-in-out; }
+        #results.is-visible { display: block; }
+        #results.is-error { background-color: #f8d7da; border-left-color: #dc3545; color: #721c24; }
+        #results h2, #results h3 { border-bottom: 2px solid #dee2e6; padding-bottom: 10px; color: #0056b3; }
+        .result-item { margin-bottom: 1rem; }
+        code { background-color: #e9ecef; padding: 3px 6px; border-radius: 4px; font-size: 0.9em; }
+        #preview-box { background-color: #fff; border: 2px dashed #007bff; padding: 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; text-align: center; margin-top: 1rem; min-height: 50px; word-break: break-all; }
+        .copy-btn { float: right; margin-top: -8px; margin-right: -8px; font-size: 0.9em; background: #007bff; color: white; border: none; border-radius: 3px; padding: 4px 10px; cursor: pointer; transition: background-color 0.2s; }
+        .copy-btn.copied { background-color: #28a745; }
+        @media (max-width: 768px) {
+            .container { padding: 15px; margin-top: 1rem; margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container py-4">
+    <h1>打印字号 (Point) 换算工具</h1>
+    <p class="text-muted">输入打印的物理尺寸和文字，工具将计算能同时满足宽度和高度约束的最大推荐字号。</p>
+    
+    <div class="row">
+        <div class="col-md-6"><div class="form-group"><label for="printWidth">最终打印宽度 (mm)</label><input type="number" class="form-control" id="printWidth" placeholder="例如：727" min="1" step="0.1"></div></div>
+        <div class="col-md-6"><div class="form-group"><label for="printHeight">最终打印高度 (mm)</label><input type="number" class="form-control" id="printHeight" placeholder="例如：66" min="1" step="0.1"></div></div>
+    </div>
+
+    <div class="form-group"><label for="textContent">打印的文字内容 (支持换行)</label><textarea id="textContent" class="form-control" placeholder="输入您的文本内容..." maxlength="500"></textarea></div>
+
+    <div class="row">
+        <div class="col-md-4"><div class="form-group"><label for="fontType">指定字体 (可选)</label><input type="text" id="fontType" class="form-control" placeholder="例如：楷体"></div></div>
+        <div class="col-md-4"><div class="form-group"><label for="fontWidthFactor">字体宽度系数</label><input type="number" id="fontWidthFactor" class="form-control" value="0.95" step="0.01" min="0.7" max="1.3"><div class="form-text">常规比例字体0.9-1.0</div></div></div>
+        <div class="col-md-4"><div class="form-group"><label for="lineHeightRatio">行高系数</label><input type="number" id="lineHeightRatio" class="form-control" value="1.4" step="0.1" min="1.0" max="2.0"><div class="form-text">常规排版建议1.2-1.5</div></div></div>
+    </div>
+    
+    <div id="results"></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const HALF_WIDTH_WEIGHT = 0.55; // 半角字符权重
+    const FULL_WIDTH_WEIGHT = 1.0;  // 全角字符权重
+
+    /**
+     * 主函数，协调所有操作
+     */
+    function runCalculation() {
+        const inputData = getInputs();
+        const resultsDiv = document.getElementById('results');
+        const validation = validateInputs(inputData);
+
+        if (!validation.isValid) {
+            if (validation.message) {
+                resultsDiv.innerHTML = `<div class="p-3">${validation.message}</div>`;
+                resultsDiv.className = 'is-visible is-error';
+            } else {
+                resultsDiv.className = '';
+            }
+            return;
+        }
+
+        resultsDiv.className = 'is-visible';
+        const metrics = calculateMetrics(inputData);
+        resultsDiv.innerHTML = generateResultsHTML(metrics, inputData);
+        
+        // 渲染HTML后，为新生成的复制按钮绑定事件
+        document.getElementById('copyBtn')?.addEventListener('click', copyResults);
+    }
+
+    /**
+     * 获取所有输入参数
+     */
+    function getInputs() {
+        return {
+            width_mm: parseFloat(document.getElementById('printWidth').value),
+            height_mm: parseFloat(document.getElementById('printHeight').value),
+            text_string: document.getElementById('textContent').value,
+            font_name: document.getElementById('fontType').value || "指定字体",
+            font_factor: parseFloat(document.getElementById('fontWidthFactor').value) || 1.0,
+            line_height_ratio: parseFloat(document.getElementById('lineHeightRatio').value) || 1.0,
+        };
+    }
+
+    /**
+     * 校验输入参数，返回验证结果对象
+     */
+    function validateInputs(data) {
+        if (!data.text_string?.trim()) return { isValid: false, message: '' }; // 如果只有空内容，则不显示错误，直接隐藏结果
+        if (isNaN(data.width_mm) || isNaN(data.height_mm) || data.width_mm <= 0 || data.height_mm <= 0) {
+            return { isValid: false, message: '请填写有效的打印宽度和高度。' };
+        }
+        if (data.font_factor < 0.7 || data.font_factor > 1.3) {
+            return { isValid: false, message: '字体宽度系数建议在 0.7 到 1.3 之间。' };
+        }
+        if (data.line_height_ratio < 1.0 || data.line_height_ratio > 2.0) {
+            return { isValid: false, message: '行高系数建议在 1.0 到 2.0 之间。' };
+        }
+        return { isValid: true, message: '' };
+    }
+
+    /**
+     * 计算文本的最大字符当量（最长一行）
+     */
+    function getMaxCharacterEquivalentCount(text) {
+        return Math.max(...text.split('\n').map(line => {
+            let count = 0;
+            for (const char of line) {
+                if (char === ' ' || char === '\u3000') continue; // 忽略半角及全角空格
+                count += (char.charCodeAt(0) <= 127) ? HALF_WIDTH_WEIGHT : FULL_WIDTH_WEIGHT;
+            }
+            return count;
+        }));
+    }
+
+    /**
+     * 核心计算逻辑
+     */
+    function calculateMetrics({ width_mm, height_mm, text_string, font_factor, line_height_ratio }) {
+        const INCH_TO_MM = 25.4;
+        const POINT_PER_INCH = 72;
+        const lines = text_string.split('\n');
+        const line_count = lines.filter(line => line.trim() !== '').length || 1; // 过滤空行
+        const maxCharacterEquivalentCount = getMaxCharacterEquivalentCount(text_string);
+
+        let fontSizeBasedOnWidth = maxCharacterEquivalentCount > 0 ? (width_mm / maxCharacterEquivalentCount / INCH_TO_MM) * POINT_PER_INCH * (1 / font_factor) : Infinity;
+        let fontSizeBasedOnHeight = line_count > 0 ? ((height_mm / (line_count * line_height_ratio)) / INCH_TO_MM) * POINT_PER_INCH : Infinity;
+        const primaryFontSize = Math.min(fontSizeBasedOnWidth, fontSizeBasedOnHeight);
+
+        return { maxCharacterEquivalentCount, line_count, fontSizeBasedOnWidth, fontSizeBasedOnHeight, primaryFontSize };
+    }
+
+    /**
+     * 生成结果区的 HTML
+     */
+    function generateResultsHTML(metrics, inputs) {
+        const { maxCharacterEquivalentCount, line_count, fontSizeBasedOnWidth, fontSizeBasedOnHeight, primaryFontSize } = metrics;
+        const { width_mm, height_mm, text_string, font_name, line_height_ratio } = inputs;
+        const recommendation = (primaryFontSize === fontSizeBasedOnWidth && primaryFontSize !== Infinity) ?
+            "文本布局主要受 <strong>宽度</strong> 限制。已根据最长一行计算字号以确保内容不会溢出。" :
+            "文本布局主要受 <strong>高度</strong> 限制。已根据总行数和行高计算字号以确保内容能完全容纳。";
+
+        // 用于复制的纯文本结果
+        const resultText = `--- 打印字号计算结果 ---\n推荐字号: ${primaryFontSize.toFixed(1)} pt\n行高: ${(primaryFontSize * line_height_ratio).toFixed(1)} pt (${line_height_ratio * 100}%)\n宽度约束字号: ${fontSizeBasedOnWidth.toFixed(2)} pt\n高度约束字号: ${fontSizeBasedOnHeight.toFixed(2)} pt\n----------------------\n打印尺寸: ${width_mm}mm × ${height_mm}mm\n文本行数: ${line_count}\n最长行当量: ${maxCharacterEquivalentCount.toFixed(2)}\n字体: ${font_name}\n内容:\n${text_string}`;
+
+        return `
+            <button class="copy-btn" id="copyBtn">复制</button>
+            <h2>计算结果</h2>
+            <div class="result-item"><strong>宽度约束最大字号:</strong> <code>${fontSizeBasedOnWidth.toFixed(2)} pt</code><br><small class="text-muted">基于最长行的 ${maxCharacterEquivalentCount.toFixed(2)} 个字符当量计算。</small></div>
+            <div class="result-item"><strong>高度约束最大字号:</strong> <code>${fontSizeBasedOnHeight.toFixed(2)} pt</code><br><small class="text-muted">基于 ${line_count} 行文本和 ${line_height_ratio} 的行高系数计算。</small></div>
+            <hr>
+            <h3>综合建议</h3>
+            <p>${recommendation}</p>
+            <div class="result-item"><strong>最终推荐字号 (取较小值):</strong> <strong class="fs-4 text-danger">${primaryFontSize.toFixed(1)} pt</strong></div>
+            <h3>视觉预览</h3>
+            <div id="preview-box" style="aspect-ratio: ${width_mm}/${height_mm};"><div style="font-family: ${font_name}, sans-serif; font-size: ${primaryFontSize * 0.5}px; line-height: ${line_height_ratio};">${text_string.replace(/\n/g, '<br>')}</div></div>
+            <h3 class="mt-4">具体操作指南</h3>
+            <ol>
+                <li>在设计软件中，将字体设置为 <strong>${font_name}</strong>。</li>
+                <li>将字号初步设置为 <strong>${primaryFontSize.toFixed(1)} pt</strong>，行高(Leading)设置为 <strong>${(primaryFontSize * line_height_ratio).toFixed(1)} pt</strong> (${line_height_ratio * 100}%)。</li>
+                <li>检查文本块是否在 ${width_mm}mm × ${height_mm}mm 的范围内，并根据需要微调。</li>
+            </ol>
+            <textarea id="copyableText" style="position: absolute; left: -9999px; top: 0;" readonly>${resultText}</textarea>
+        `;
+    }
+
+    /**
+     * 复制结果到剪贴板 (使用现代异步API)
+     */
+    async function copyResults() {
+        const textToCopy = document.getElementById('copyableText')?.value;
+        const copyButton = document.getElementById('copyBtn');
+        if (!textToCopy || !copyButton) return;
+
+        try {
+            await navigator.clipboard.writeText(textToCopy);
+            copyButton.textContent = '已复制!';
+            copyButton.classList.add('copied');
+            setTimeout(() => {
+                copyButton.textContent = '复制';
+                copyButton.classList.remove('copied');
+            }, 2000);
+        } catch (err) {
+            console.error('无法自动复制: ', err);
+            // 降级处理：如果API失败，则尝试旧方法
+            const textArea = document.getElementById('copyableText');
+            textArea.style.position = 'fixed';
+            textArea.select();
+            textArea.setSelectionRange(0, 99999); // For mobile devices
+            document.execCommand('copy');
+            textArea.style.position = 'absolute';
+            alert('结果已复制(备用模式)。');
+        }
+    }
+
+    // 绑定所有输入框的 'input' 事件
+    const inputs = document.querySelectorAll('input, textarea');
+    inputs.forEach(input => input.addEventListener('input', runCalculation));
+});
+</script>
+
+</body>
+</html>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
