@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generated Content</title>
+  <style>
+    body { 
+      font-family: Menlo, Monaco, 'Courier New', monospace;
+      line-height: 1.6; 
+      padding: 2em; 
+      margin: 0;
+      background-color: #f8f8f8;
+    }
+    pre {
+      white-space: pre-wrap; /* 会自动换行 */
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+  <pre><!-- filename: upload.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>上传新工具 · AI Toolbox</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link href="https://unpkg.com/mvp.css" rel="stylesheet" />
+</head>
+<body>
+<main>
+  <h1>📤 上传新的在线工具</h1>
+  <p>选择一个 <strong>.html</strong> 文件并填写元信息；点击「上传」后，系统会：</p>
+  <ol>
+    <li>把文件推到 <code>ai-toolbox</code> 仓库。</li>
+    <li>自动在首页「在线工具」分区插入对应卡片。</li>
+  </ol>
+
+  <form id="uploadForm">
+    <label>
+      工具文件 (.html)
+      <input type="file" name="file" accept=".html" required />
+    </label>
+
+    <label>
+      工具名称
+      <input type="text" name="title" placeholder="例如：SVG 转 PNG" required />
+    </label>
+
+    <label>
+      简短描述
+      <textarea name="desc" rows="2" placeholder="一句话描述功能" required></textarea>
+    </label>
+
+    <label>
+      Emoji/Icon (可选)
+      <input type="text" name="icon" placeholder="🔧" maxlength="2" />
+    </label>
+
+    <button type="submit">上传</button>
+    <output id="msg"></output>
+  </form>
+</main>
+
+<script>
+/**
+ * 上传表单提交
+ */
+document.getElementById('uploadForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const $msg = document.getElementById('msg');
+  $msg.value = '正在上传…';
+
+  const formData = new FormData(e.target);
+  const payload = {
+    title: formData.get('title').trim(),
+    desc: formData.get('desc').trim(),
+    icon: formData.get('icon').trim() || '🛠',
+    fileName: formData.get('file').name,
+    fileContent: await formData.get('file').text()
+  };
+
+  const res = await fetch('/api/upload', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(payload)
+  });
+
+  if (res.ok) {
+    $msg.value = '✅ 上传成功，稍后刷新首页查看！';
+  } else {
+    const txt = await res.text();
+    $msg.value = '❌ 上传失败：' + txt;
+  }
+});
+</script>
+</body>
+</html></pre>
+</body>
+</html>
