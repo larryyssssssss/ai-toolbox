@@ -9,7 +9,7 @@
 ### 外部网站
 - [白噪音环境声](http://white-noise-page.tools.zooo.qzz.io) - 海浪、雨声、咖啡厅等场景音，助眠与专注
 - [纸由我](https://paperme.toolooz.com/) - 自定义各种功能的打印纸张
-- [LinguaSubs - 字幕词汇通](https://linguasubs.zooo.qzz.io/) - 上传电影字幕，学习电影涉及的英文单词
+- [LinguaSubs - 字幕词汇通](https://linguasub.zooo.qzz.io/) - 上传电影字幕，学习电影涉及的英文单词
 
 ### 应用下载
 - [ReNameTool 重命名](https://github.com/fendaabc/re_name/releases) - 跨平台文件批量重命名工具，持续更新中
