@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>🚀文档批量转换助手 - AI Toolbox</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Rounded:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ========== 主题变量 ========== */
+    :root{--primary:#FF644C;--accent:#95D2BA;--highlight:#FED981;--neutral-bg:#FFF9F3;--neutral-card:#FFFFFF;--neutral-border:#E8E8E8;--text-main:#222;--text-sub:#666;}
+    :root[data-theme="bubblegum"]{--primary:#FF6EC7;--accent:#FFA4E0;--highlight:#FFE7F8;--neutral-bg:#FFF6FB;--neutral-border:#F5D0EF;}
+    :root[data-theme="sky"]{--primary:#59A5FF;--accent:#8ED1FC;--highlight:#C1E8FF;--neutral-bg:#F4FAFF;--neutral-border:#D4E8FE;}
+    :root[data-theme="lavender"]{--primary:#A280FF;--accent:#C1A3FF;--highlight:#E8DBFF;--neutral-bg:#FAF7FF;--neutral-border:#E3DAFF;}
+
+    /* ========== 通用 ========== */
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter Rounded','思源黑体',sans-serif;background:var(--neutral-bg);color:var(--text-main);-webkit-font-smoothing:antialiased;line-height:1.55;}
+    h1, h2{color:var(--primary);margin-bottom:18px;}
+    h1{font-size:2rem;margin:20px 0;}
+    h2{font-size:1.35rem;margin-top:30px;}
+    a{text-decoration:none;color:var(--primary);}
+    a:hover{text-decoration:underline;}
+    .container{max-width:800px;margin:0 auto;padding:20px;}
+    .card{background:var(--neutral-card);border:2px solid var(--highlight);border-radius:14px;padding:24px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+    .card-title{font-size:1.3rem;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:8px;color:var(--primary);}
+    .btn{display:inline-block;padding:12px 24px;border-radius:8px;background:var(--primary);color:#fff;font-size:1rem;font-weight:500;transition:background .15s;text-align: center;cursor: pointer;margin:10px 0;}
+    .btn:hover{background:var(--accent);text-decoration: none;}
+    .btn:disabled{background:#B0C4DE;cursor:not-allowed;}
+    .code-block{background:#f4f4f4;padding:15px;border-radius:8px;font-family:monospace;overflow-x:auto;margin:15px 0;white-space:pre-wrap;}
+    .step{margin:15px 0;padding-left:20px;border-left:4px solid var(--highlight);}
+    .back-link{margin-top:30px;display:inline-block;color:var(--text-sub);}
+    .warning{color:#C0392B;background-color:#FDEDEC;padding:15px;border-radius:8px;margin:15px 0;}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🚀文档批量转换助手</h1>
+    
+    <div class="card">
+      <div class="card-title">功能介绍</div>
+      <p>这是一个本地运行的文档批量转换工具，可以将PPT、DOC等格式的文档批量转换为PDF或TXT格式。</p>
+      <p><strong>支持的操作系统：</strong>Windows、Mac</p>
+      <p><strong>支持的输入格式：</strong>PPT, PPTX, ODP, DOC, DOCX, RTF, ODT</p>
+      <p><strong>支持的输出格式：</strong>PDF (幻灯片), TXT (文档)</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">使用方法</div>
+      
+      <h2>第一步：下载工具</h2>
+      <div class="step">
+        <p>点击下方按钮下载工具压缩包：</p>
+        <a class="btn" href="downloads/文档批量转换助手.zip" download>📥 下载文档批量转换助手</a>
+        <p>下载完成后，解压到您希望存放的位置。</p>
+      </div>
+      
+      <h2>第二步：安装依赖</h2>
+      <div class="step">
+        <p>该工具依赖于LibreOffice进行文档转换，请确保您的计算机已安装LibreOffice：</p>
+        <ol>
+          <li>访问 <a href="https://www.libreoffice.org/download/download/" target="_blank">LibreOffice官网</a> 下载并安装最新版本</li>
+          <li>安装完成后重启计算机（推荐）</li>
+        </ol>
+        <div class="warning">
+          <strong>重要提示：</strong>如果未安装LibreOffice，工具将无法正常运行。
+        </div>
+      </div>
+      
+      <h2>第三步：运行工具</h2>
+      <div class="step">
+        <p>根据您的操作系统选择运行方式：</p>
+        <h3>Windows系统：</h3>
+        <ol>
+          <li>进入解压后的文件夹</li>
+          <li>双击 <code>Windows双击我来运行.bat</code> 文件</li>
+        </ol>
+        <h3>Mac系统：</h3>
+        <ol>
+          <li>进入解压后的文件夹</li>
+          <li>双击 <code>Mac双击我来运行.command</code> 文件</li>
+          <li>如果系统提示无法打开，请按以下步骤操作：
+            <ol>
+              <li>右键点击该文件</li>
+              <li>选择"打开"</li>
+              <li>在弹出的对话框中点击"打开"</li>
+            </ol>
+          </li>
+        </ol>
+      </div>
+      
+      <h2>第四步：使用工具</h2>
+      <div class="step">
+        <ol>
+          <li>选择转换任务类型（幻灯片转PDF或文档转TXT）</li>
+          <li>选择包含待处理文件的文件夹</li>
+          <li>点击"开始转换"按钮</li>
+          <li>等待转换完成</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">注意事项</div>
+      <ul>
+        <li>转换过程中请勿关闭程序窗口</li>
+        <li>转换完成后，原始文件会被移动到相应的文件夹中</li>
+        <li>如果转换失败，失败的文件会移动到"03_转换失败的原始文件"文件夹</li>
+        <li>转换成功的文件会移动到"04_处理成功的原始文件"文件夹</li>
+        <li>生成的PDF/TXT文件会保存在"01_转换成功的PDF"或"02_转换成功的TXT"文件夹中</li>
+      </ul>
+    </div>
+
+    <a class="back-link" href="index.html">← 返回工具箱主页</a>
+  </div>
+
+  <script>
+    // 继承主题设置
+    const parentTheme = window.parent ? window.parent.document.documentElement.dataset.theme : null;
+    if (parentTheme) {
+      document.documentElement.dataset.theme = parentTheme;
+    } else {
+      const savedTheme = localStorage.getItem('ai-toolbox-theme');
+      if (savedTheme && savedTheme !== 'default') {
+        document.documentElement.dataset.theme = savedTheme;
+      }
+    }
+  </script>
+</body>
+</html>
