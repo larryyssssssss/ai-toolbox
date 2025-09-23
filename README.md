@@ -10,6 +10,8 @@
 - [白噪音环境声](http://white-noise-page.tools.zooo.qzz.io) - 海浪、雨声、咖啡厅等场景音，助眠与专注
 - [纸由我](https://paperme.toolooz.com/) - 自定义各种功能的打印纸张
 - [LinguaSubs - 字幕词汇通](https://linguasubs.zooo.qzz.io/) - 上传电影字幕，学习电影涉及的英文单词
+- [最优图像优化 - Recompressor](https://zh.recompressor.com/) - 在文件尺寸和质量间选择完美平衡，支持PNG、JPG和SVG格式，所有处理在浏览器中完成
+- [抖音视频下载器](https://tiktokio.com/zh/%E6%8A%96%E9%9F%B3%E4%B8%8B%E8%BD%BD%E5%99%A8/) - 免费下载无水印抖音视频，支持所有设备，无需注册，高质量下载
 
 ### 应用下载
 - [ReNameTool 重命名](https://github.com/fendaabc/re_name/releases) - 跨平台文件批量重命名工具，持续更新中
