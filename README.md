@@ -12,6 +12,8 @@
 - [LinguaSubs - 字幕词汇通](https://linguasubs.zooo.qzz.io/) - 上传电影字幕，学习电影涉及的英文单词
 - [最优图像优化 - Recompressor](https://zh.recompressor.com/) - 在文件尺寸和质量间选择完美平衡，支持PNG、JPG和SVG格式，所有处理在浏览器中完成
 - [抖音视频下载器](https://tiktokio.com/zh/%E6%8A%96%E9%9F%B3%E4%B8%8B%E8%BD%BD%E5%99%A8/) - 免费下载无水印抖音视频，支持所有设备，无需注册，高质量下载
+- [KukuTool视频解析](https://dy.kukutool.com/zh-Hans-SG) - 免费不限次数，支持130多个平台解析去水印，无需登录，支持批量下载
+- [GreenVideo视频下载](https://greenvideo.cc/) - 免费稳定快速，支持1000+视频平台解析下载，无次数限制
 
 ### 应用下载
 - [ReNameTool 重命名](https://github.com/fendaabc/re_name/releases) - 跨平台文件批量重命名工具，持续更新中
