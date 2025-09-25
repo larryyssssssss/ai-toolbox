@@ -46,6 +46,14 @@
       header .desc{font-size:.9rem}
       h2{font-size:1.15rem}
     }
+    /* 子分类样式 */
+    h3{font-size:1.1rem;margin-bottom:16px;color:var(--accent);display:flex;align-items:center;gap:6px;}
+    .sub-category{margin-bottom:40px;}
+
+    /* 响应式调整 */
+    @media(max-width:600px){
+      h3{font-size:1rem}
+    }
   </style>
 </head>
 <body>
@@ -85,48 +93,68 @@
     <!-- ===== 分区 2：外部网站 ===== -->
     <section>
       <h2>🌐 外部网站</h2>
-      <div class="grid">
-        <article class="card">
-          <div class="card-title">白噪音环境声</div>
-          <p class="card-desc">海浪、雨声、咖啡厅等场景音，助眠与专注。</p>
-          <a class="card-link" href="http://white-noise-page.tools.zooo.qzz.io" target="_blank" rel="noopener">去网站</a>
-        </article>
-        <!-- 新增纸由我工具 -->
-        <article class="card">
-          <div class="card-title">纸由我</div>
-          <p class="card-desc">自定义各种功能的打印纸张。</p>
-          <a class="card-link" href="https://paperme.toolooz.com/" target="_blank" rel="noopener">去网站</a>
-        </article>
-        <!-- 新增LinguaSubs工具 -->
-        <article class="card">
-          <div class="card-title">LinguaSubs - 字幕词汇通</div>
-          <p class="card-desc">上传电影字幕，学习电影涉及的英文单词。</p>
-          <a class="card-link" href="https://linguasubs.zooo.qzz.io/" target="_blank" rel="noopener">去网站</a>
-        </article>
-        <!-- 新增图像压缩工具 -->
-        <article class="card">
-          <div class="card-title">最优图像优化 - Recompressor</div>
-          <p class="card-desc">在文件尺寸和质量间选择完美平衡，支持PNG、JPG和SVG格式，所有处理在浏览器中完成。</p>
-          <a class="card-link" href="https://zh.recompressor.com/" target="_blank" rel="noopener">去网站</a>
-        </article>
-        <!-- 新增抖音视频下载器 -->
-        <article class="card">
-          <div class="card-title">抖音视频下载器</div>
-          <p class="card-desc">免费下载无水印抖音视频，支持所有设备，无需注册，高质量下载。</p>
-          <a class="card-link" href="https://tiktokio.com/zh/%E6%8A%96%E9%9F%B3%E4%B8%8B%E8%BD%BD%E5%99%A8/" target="_blank" rel="noopener">去网站</a>
-        </article>
-        <!-- 新增KukuTool视频下载平台 -->
-        <article class="card">
-          <div class="card-title">KukuTool视频解析</div>
-          <p class="card-desc">免费不限次数，支持130多个平台解析去水印，无需登录，支持批量下载。</p>
-          <a class="card-link" href="https://dy.kukutool.com/zh-Hans-SG" target="_blank" rel="noopener">去网站</a>
-        </article>
-        <!-- 新增GreenVideo视频下载平台 -->
-        <article class="card">
-          <div class="card-title">GreenVideo视频下载</div>
-          <p class="card-desc">免费稳定快速，支持1000+视频平台解析下载，无次数限制。</p>
-          <a class="card-link" href="https://greenvideo.cc/" target="_blank" rel="noopener">去网站</a>
-        </article>
+      
+      <!-- 媒体处理工具 -->
+      <div style="margin-bottom: 40px;">
+        <h3 style="font-size: 1.1rem; color: var(--accent); margin-bottom: 16px;">🎨 媒体处理</h3>
+        <div class="grid">
+          <article class="card">
+            <div class="card-title">最优图像优化 - Recompressor</div>
+            <p class="card-desc">在文件尺寸和质量间选择完美平衡，支持PNG、JPG和SVG格式，所有处理在浏览器中完成。</p>
+            <a class="card-link" href="https://zh.recompressor.com/" target="_blank" rel="noopener">去网站</a>
+          </article>
+        </div>
+      </div>
+      
+      <!-- 视频工具 -->
+      <div style="margin-bottom: 40px;">
+        <h3 style="font-size: 1.1rem; color: var(--accent); margin-bottom: 16px;">🎬 视频工具</h3>
+        <div class="grid">
+          <article class="card">
+            <div class="card-title">抖音视频下载器</div>
+            <p class="card-desc">免费下载无水印抖音视频，支持所有设备，无需注册，高质量下载。</p>
+            <a class="card-link" href="https://tiktokio.com/zh/%E6%8A%96%E9%9F%B3%E4%B8%8B%E8%BD%BD%E5%99%A8/" target="_blank" rel="noopener">去网站</a>
+          </article>
+          <article class="card">
+            <div class="card-title">KukuTool视频解析</div>
+            <p class="card-desc">免费不限次数，支持130多个平台解析去水印，无需登录，支持批量下载。</p>
+            <a class="card-link" href="https://dy.kukutool.com/zh-Hans-SG" target="_blank" rel="noopener">去网站</a>
+          </article>
+          <article class="card">
+            <div class="card-title">GreenVideo视频下载</div>
+            <p class="card-desc">免费稳定快速，支持1000+视频平台解析下载，无次数限制。</p>
+            <a class="card-link" href="https://greenvideo.cc/" target="_blank" rel="noopener">去网站</a>
+          </article>
+        </div>
+      </div>
+      
+      <!-- 学习工具 -->
+      <div style="margin-bottom: 40px;">
+        <h3 style="font-size: 1.1rem; color: var(--accent); margin-bottom: 16px;">📚 学习工具</h3>
+        <div class="grid">
+          <article class="card">
+            <div class="card-title">LinguaSubs - 字幕词汇通</div>
+            <p class="card-desc">上传电影字幕，学习电影涉及的英文单词。</p>
+            <a class="card-link" href="https://linguasubs.zooo.qzz.io/" target="_blank" rel="noopener">去网站</a>
+          </article>
+        </div>
+      </div>
+      
+      <!-- 生活助手 -->
+      <div style="margin-bottom: 40px;">
+        <h3 style="font-size: 1.1rem; color: var(--accent); margin-bottom: 16px;">🧰 生活助手</h3>
+        <div class="grid">
+          <article class="card">
+            <div class="card-title">白噪音环境声</div>
+            <p class="card-desc">海浪、雨声、咖啡厅等场景音，助眠与专注。</p>
+            <a class="card-link" href="http://white-noise-page.tools.zooo.qzz.io" target="_blank" rel="noopener">去网站</a>
+          </article>
+          <article class="card">
+            <div class="card-title">纸由我</div>
+            <p class="card-desc">自定义各种功能的打印纸张。</p>
+            <a class="card-link" href="https://paperme.toolooz.com/" target="_blank" rel="noopener">去网站</a>
+          </article>
+        </div>
       </div>
     </section>
 
